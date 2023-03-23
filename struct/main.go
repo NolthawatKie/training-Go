@@ -16,9 +16,13 @@ func (rec rectangle) Area2() float64 {
 	return rec.w * rec.l
 }
 
+func (rec *rectangle) setWidth(w float64) {
+	rec.w = w
+}
+
 func main() {
 	rec := rectangle{
-		w: 4,
+		w: 6,
 		l: 5,
 	}
 
@@ -27,5 +31,9 @@ func main() {
 	fmt.Println(rec.l)
 	fmt.Println(rec.w)
 	fmt.Println(Area1(rec))
+	fmt.Println(rec.Area2())
+	fmt.Println("----")
+
+	rec.setWidth(65)
 	fmt.Println(rec.Area2())
 }
