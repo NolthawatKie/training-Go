@@ -1,0 +1,23 @@
+การเลือกว่าจะใช้ Value หรือ Pointer Receiver อาจจะเป็นเรื่องยากสำหรับผู้เริ่มเขียน Go ดังนั้นถ้ายังไม่แน่ใจว่าจะใช้อะไร แนะนำให้ใช้ Pointer แต่ทั้งนี้ทั้งนั้นก็อาจจะมีกรณีที่ Value Receiver จะดูเหมาะสมมากกว่า ซึ่งโดยทั่วไปแล้วจะเกี่ยวกับเหตุผลด้านประสิทธิภาพ เช่น Structs ขนาดเล็กที่ไม่ถูกแก้ไขค่า หรือค่าของ Basic Type
+
+
+
+คำแนะนำเพิ่มเติมเกี่ยวกับการเลือกว่าจะใช้ Value หรือ Pointer Receiver มีดังนี้
+
+Guidelines for Value Receiver:
+
+ถ้า receiver เป็น map, func หรือ chan: ควรใช้ value receiver
+ถ้า receiver เป็น slice และ method ที่เราเขียนไม่ได้ทำการ reslice หรือ reallocate slice: ควรใช้ value receiver เช่นกัน
+ถ้า receiver เป็น array หรือ struct ขนาดเล็ก และ contain elements ที่เป็น basic type เช่น int หรือ string, value type เช่น time.Time, ไม่ใช่ค่าที่ mutate และ ไม่เป็น pointer: ในกรณีเช่นนี้ value receiver จะเหมาะสมกว่าในเรื่อง Optimizing garbage collector
+
+
+Guidelines for Pointer Receiver:
+
+ถ้า method ต้องการ mutate receiver: receiver ต้องเป็น pointer เท่านั้น
+ถ้า receiver เป็น struct ที่ contain sync.Mutex หรือ synchronizing field: receiver ต้องเป็น pointer เท่านั้นเพื่อหลีกเลี่ยงการ copy
+ถ้า receiver เป็น struct หรือ array ขนาดใหญ่: pointer receiver จะมีประสิทธิภาพที่ดีกว่า
+ถ้าต้องการแชร์ value ภายใน method: ควรใช้ pointer receiver
+ถ้า receiver เป็น struct, array หรือ slice ที่ contain elements ที่เป็น pointer ถึงบางค่าที่อาจจะเกิดการ mutate: การใช้ pointer receiver จะเหมาะสมกว่า เนื่องจากเหตุผลในการอ่าน code
+
+
+และสุดท้ายแล้ว ถ้าหากยังไม่มั่นใจว่าควรจะใช้ receiver ไหน ก็แนะนำให้ใช้ pointer receiver ก่อนครับผม
