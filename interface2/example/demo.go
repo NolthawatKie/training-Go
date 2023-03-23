@@ -2,11 +2,12 @@ package example
 
 import "fmt"
 
-func Execute() {
-	repo := NewStaticRepository()
-	h := NewHandler(repo)
-	s := h.Do(2)
-	fmt.Println(s)
+func Execute() int {
+	// repo := NewStaticRepository()
+	// h := NewHandler(repo)
+	// s := h.Do(2)
+	// fmt.Println(s)
+	return 1
 }
 
 type Language struct {
