@@ -5,7 +5,7 @@ import "fmt"
 func Execute() {
 	repo := NewStaticRepository()
 	h := NewHandler(repo)
-	s := h.Do(4)
+	s := h.Do(0)
 	fmt.Println(s)
 
 }
