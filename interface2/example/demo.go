@@ -2,12 +2,12 @@ package example
 
 import "fmt"
 
-func Execute() int {
-	// repo := NewStaticRepository()
-	// h := NewHandler(repo)
-	// s := h.Do(2)
-	// fmt.Println(s)
-	return 1
+func Execute() {
+	repo := NewStaticRepository()
+	h := NewHandler(repo)
+	s := h.Do(4)
+	fmt.Println(s)
+
 }
 
 type Language struct {
@@ -41,4 +41,14 @@ var data = map[uint]Language{
 
 type StaticRepo struct {
 	data map[uint]Language
+}
+
+func NewStaticRepository() Repository {
+	var staticRepo = StaticRepo{}
+	staticRepo.data = data
+	return &staticRepo
+}
+
+func (s *StaticRepo) QueryLang(id uint) Language {
+	return s.data[id]
 }

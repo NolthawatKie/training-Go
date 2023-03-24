@@ -1,6 +1,6 @@
 package main
 
-import "github.com/nolthawatkie/training-go/example"
+import "training-go/interface2/example"
 
 func main() {
 	example.Execute()
